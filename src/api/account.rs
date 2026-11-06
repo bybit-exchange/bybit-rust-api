@@ -2,7 +2,6 @@
 
 use crate::client::BybitClient;
 use crate::error::Result;
-use crate::models::account::*;
 use crate::models::*;
 
 impl BybitClient {
@@ -242,6 +241,49 @@ impl BybitClient {
 
     pub async fn upgrade_to_uta_pro(&self) -> Result<UpgradeToUtaProResponse> {
         self.post("/v5/account/upgrade-to-uta", &serde_json::json!({}))
+            .await
+    }
+}
+
+impl BybitClient {
+    pub async fn demo_apply_money(
+        &self,
+        params: DemoApplyMoneyParams,
+    ) -> Result<DemoApplyMoneyResponse> {
+        self.post("/v5/account/demo-apply-money", &params).await
+    }
+
+    pub async fn get_option_asset_info(&self) -> Result<GetOptionAssetInfoResponse> {
+        let params = vec![];
+        self.get("/v5/account/option-asset-info", &params).await
+    }
+
+    pub async fn get_pay_info(&self, coin: Option<&str>) -> Result<GetPayInfoResponse> {
+        let mut params = vec![];
+        if let Some(value) = coin {
+            params.push(("coin", value));
+        }
+        self.get("/v5/account/pay-info", &params).await
+    }
+
+    pub async fn get_trade_info_for_analysis(
+        &self,
+        symbol: &str,
+        start_time: Option<i64>,
+        end_time: Option<i64>,
+    ) -> Result<GetTradeInfoForAnalysisResponse> {
+        let mut params = vec![("symbol", symbol)];
+        let start_time_string;
+        if let Some(value) = start_time {
+            start_time_string = value.to_string();
+            params.push(("startTime", start_time_string.as_str()));
+        }
+        let end_time_string;
+        if let Some(value) = end_time {
+            end_time_string = value.to_string();
+            params.push(("endTime", end_time_string.as_str()));
+        }
+        self.get("/v5/account/trade-info-for-analysis", &params)
             .await
     }
 }

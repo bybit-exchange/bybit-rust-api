@@ -383,3 +383,31 @@ impl BybitClient {
         self.post("/v5/crypto-loan-fixed/renew", &params).await
     }
 }
+
+impl BybitClient {
+    // FIXME: OpenAPI response type object has no declared model; using serde_json::Value.
+    pub async fn get_crypto_loan_fixed_available_inventory(
+        &self,
+        currency: &str,
+        term: &str,
+        annual_rate: &str,
+    ) -> Result<serde_json::Value> {
+        let params = vec![
+            ("currency", currency),
+            ("term", term),
+            ("annualRate", annual_rate),
+        ];
+        self.get("/v5/crypto-loan-fixed/available-inventory", &params)
+            .await
+    }
+
+    // FIXME: OpenAPI response type object has no declared model; using serde_json::Value.
+    pub async fn get_crypto_loan_flexible_available_inventory(
+        &self,
+        currency: &str,
+    ) -> Result<serde_json::Value> {
+        let params = vec![("currency", currency)];
+        self.get("/v5/crypto-loan-flexible/available-inventory", &params)
+            .await
+    }
+}

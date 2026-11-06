@@ -631,3 +631,5 @@ pub struct SetAutoAddMarginParams {
 pub type SetLeverageResponse = serde_json::Value;
 
 pub type SwitchPositionModeResponse = serde_json::Value;
+
+pub type GetPositionSymbolInfoResponse = serde_json::Value;

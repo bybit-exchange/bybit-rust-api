@@ -2,7 +2,6 @@
 
 use crate::client::BybitClient;
 use crate::error::Result;
-use crate::models::trade::*;
 use crate::models::*;
 use tracing::info;
 

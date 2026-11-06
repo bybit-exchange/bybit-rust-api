@@ -159,8 +159,7 @@ impl BybitClient {
     ) -> Result<ListSubApiKeysV5Response> {
         let sub_member_id_str = sub_member_id.to_string();
         let limit_str;
-        let mut params: Vec<(&str, &str)> =
-            vec![("subMemberId", sub_member_id_str.as_str())];
+        let mut params: Vec<(&str, &str)> = vec![("subMemberId", sub_member_id_str.as_str())];
         if let Some(l) = limit {
             limit_str = l.to_string();
             params.push(("limit", limit_str.as_str()));
@@ -262,5 +261,12 @@ impl BybitClient {
         params: UpdateSubApiKeyParams,
     ) -> Result<UpdateSubApiKeyResponse> {
         self.post("/v5/user/update-sub-api", &params).await
+    }
+}
+
+impl BybitClient {
+    pub async fn query_referral_code(&self) -> Result<QueryReferralCodeResponse> {
+        let params = vec![];
+        self.get("/v5/user/invitation/code", &params).await
     }
 }

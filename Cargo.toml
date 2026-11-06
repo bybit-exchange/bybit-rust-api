@@ -1,8 +1,8 @@
 [package]
 name = "bybit-api"
-version = "0.1.2"
+version = "0.1.4"
 edition = "2021"
-rust-version = "1.75"
+rust-version = "1.89"
 license = "MIT"
 description = "A Rust SDK for the Bybit V5 API - async, type-safe, zero-panic"
 repository = "https://github.com/bybit-exchange/bybit-rust-api"

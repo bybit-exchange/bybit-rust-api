@@ -403,3 +403,20 @@ pub struct ApiKeyPermissions {
     #[serde(rename = "Affiliate", skip_serializing_if = "Option::is_none")]
     pub affiliate: Option<Vec<String>>,
 }
+
+pub type QueryReferralCodeResponse = QueryReferralCodeResult;
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct QueryReferralCodeResult {
+    #[serde(default)]
+    pub referral_codes: Option<Vec<ReferralCodeItem>>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ReferralCodeItem {
+    pub referral_code: String,
+    pub referral_link: String,
+    pub scene: i64,
+}

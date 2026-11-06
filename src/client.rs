@@ -129,6 +129,347 @@ mod query_tests {
     }
 }
 
+#[cfg(test)]
+mod response_shape_tests {
+    use super::{ApiResponse, BybitClient};
+    use crate::models::alpha::GetAssetListResponse;
+    use crate::models::alpha::{GetLppositionListParams, PredictionOrderType};
+    use crate::models::dca::DCACloseMode;
+    use crate::models::event::GetEcPositionInfoResponse;
+    use crate::models::fmart_bot::AutoCycleToggle;
+    use crate::models::spot_margin::QueryFixedBorrowPenaltyInterestResponse;
+    use crate::models::spot_x::GetLaunchpoolProjectListResponse;
+    use crate::models::strategy::QueryStrategyListResponse;
+    use crate::models::{
+        AmendSpreadOrderParams, CancelAllSpreadOrdersParams, CancelSpreadOrderParams,
+        ConvertAccountType, ConvertCoinSide, ConvertHistoryQueryResponse, CreateSpreadOrderParams,
+        GetAssetOverviewResponse, GetOptionBaseCoinsResponse, GetPreUpgradeOrderHistoryResponse,
+        GetSpreadOrderbookResponse, InsLoanProductInfosResponse, OrderType,
+        QueryReferralCodeResponse, Side, TimeInForce,
+    };
+    use crate::{BybitError, ClientConfig};
+    use std::io::{Read, Write};
+    use std::net::TcpListener;
+
+    fn serve_json_once(body: &str) -> (String, std::thread::JoinHandle<()>) {
+        let listener = TcpListener::bind("127.0.0.1:0").expect("bind local test server");
+        let address = listener.local_addr().expect("read local test address");
+        let body = body.to_owned();
+        let handle = std::thread::spawn(move || {
+            let (mut stream, _) = listener.accept().expect("accept one request");
+            let mut request = [0_u8; 2048];
+            let _ = stream.read(&mut request).expect("read request");
+            let response = format!(
+                "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",
+                body.len(),
+                body
+            );
+            stream
+                .write_all(response.as_bytes())
+                .expect("write response");
+        });
+        (format!("http://{address}"), handle)
+    }
+
+    #[derive(Debug, serde::Deserialize)]
+    struct StrictResult {
+        #[allow(dead_code)]
+        required: String,
+    }
+
+    #[tokio::test]
+    async fn api_errors_are_checked_before_result_deserialization() {
+        let body = r#"{"retCode":181023,"retMsg":"Only EC maker accounts are allowed","result":{},"retExtInfo":{},"time":1}"#;
+        let (base_url, server) = serve_json_once(body);
+        let client = BybitClient::new(ClientConfig::builder("", "").base_url(base_url).build())
+            .expect("create client");
+
+        let error = client
+            .get_public::<StrictResult>("/test", &[])
+            .await
+            .expect_err("nonzero retCode must fail");
+        server.join().expect("join local test server");
+
+        assert!(matches!(error, BybitError::Api { code: 181023, .. }));
+    }
+
+    #[tokio::test]
+    async fn parse_errors_redact_sensitive_response_values() {
+        let body = r#"{"retCode":0,"retMsg":"OK","result":{"apiSecret":"top-secret-response"},"retExtInfo":{},"time":1}"#;
+        let (base_url, server) = serve_json_once(body);
+        let client = BybitClient::new(ClientConfig::builder("", "").base_url(base_url).build())
+            .expect("create client");
+
+        let error = client
+            .get_public::<StrictResult>("/test", &[])
+            .await
+            .expect_err("incompatible result must fail");
+        server.join().expect("join local test server");
+        let message = error.to_string();
+
+        assert!(!message.contains("top-secret-response"));
+        assert!(message.contains("***REDACTED***"));
+    }
+
+    #[test]
+    fn generated_responses_deserialize_unwrapped_result_payloads() {
+        let launchpool: GetLaunchpoolProjectListResponse =
+            serde_json::from_value(serde_json::json!({"list": [{"projectId": "project-1"}]}))
+                .expect("launchpool result should deserialize");
+        let launchpool = serde_json::to_value(launchpool).expect("serialize launchpool result");
+        assert_eq!(
+            launchpool
+                .pointer("/list/0/projectId")
+                .and_then(|v| v.as_str()),
+            Some("project-1")
+        );
+
+        let alpha: GetAssetListResponse =
+            serde_json::from_value(serde_json::json!({"items": ["BTC"]}))
+                .expect("alpha result should deserialize");
+        let alpha = serde_json::to_value(alpha).expect("serialize alpha result");
+        assert_eq!(
+            alpha.pointer("/items/0").and_then(|v| v.as_str()),
+            Some("BTC")
+        );
+
+        let event: GetEcPositionInfoResponse =
+            serde_json::from_value(serde_json::json!({"list": []}))
+                .expect("event result should deserialize");
+        let event = serde_json::to_value(event).expect("serialize event result");
+        assert!(event.pointer("/list").is_some());
+
+        let strategy: QueryStrategyListResponse =
+            serde_json::from_value(serde_json::json!({"list": []}))
+                .expect("strategy result should deserialize");
+        let strategy = serde_json::to_value(strategy).expect("serialize strategy result");
+        assert!(strategy.pointer("/list").is_some());
+
+        let interest: QueryFixedBorrowPenaltyInterestResponse =
+            serde_json::from_value(serde_json::json!({"list": []}))
+                .expect("spot margin result should deserialize");
+        let interest = serde_json::to_value(interest).expect("serialize spot margin result");
+        assert!(interest.pointer("/list").is_some());
+    }
+
+    #[test]
+    fn generated_open_enums_round_trip_scalar_wire_values() {
+        let number: DCACloseMode =
+            serde_json::from_value(serde_json::json!(1)).expect("numeric enum value");
+        assert_eq!(serde_json::to_value(number).unwrap(), serde_json::json!(1));
+
+        let string: PredictionOrderType =
+            serde_json::from_value(serde_json::json!("Limit")).expect("string enum value");
+        assert_eq!(
+            serde_json::to_value(string).unwrap(),
+            serde_json::json!("Limit")
+        );
+
+        let boolean: AutoCycleToggle =
+            serde_json::from_value(serde_json::json!(true)).expect("boolean enum value");
+        assert_eq!(
+            serde_json::to_value(boolean).unwrap(),
+            serde_json::json!(true)
+        );
+
+        assert_eq!(
+            serde_json::to_value(GetLppositionListParams {}).unwrap(),
+            serde_json::json!({})
+        );
+    }
+
+    #[test]
+    fn trade_analysis_requires_symbol() {
+        let client = BybitClient::testnet("", "").unwrap();
+        let _request = client.get_trade_info_for_analysis("BTCUSDT", None, None);
+    }
+
+    #[test]
+    fn asset_overview_accepts_open_ended_labels() {
+        let response: ApiResponse<GetAssetOverviewResponse> =
+            serde_json::from_value(serde_json::json!({
+                "retCode": 0,
+                "retMsg": "Success",
+                "result": {
+                    "totalEquity": "1",
+                    "list": [{
+                        "accountType": "UnifiedTradingAccount",
+                        "categories": [{"category": "Easy Earn", "equity": "1"}]
+                    }]
+                },
+                "time": 1
+            }))
+            .expect("asset overview labels should deserialize");
+
+        let list = response.result.list.unwrap();
+        assert_eq!(
+            list[0].account_type.as_deref(),
+            Some("UnifiedTradingAccount")
+        );
+        assert_eq!(
+            list[0].categories.as_ref().unwrap()[0].category.as_deref(),
+            Some("Easy Earn")
+        );
+    }
+
+    #[test]
+    fn convert_types_match_wire_contract() {
+        assert_eq!(
+            serde_json::to_value(ConvertAccountType::Uta).unwrap(),
+            serde_json::json!("eb_convert_uta")
+        );
+        assert_eq!(ConvertCoinSide::FromCoin.to_string(), "0");
+        assert_eq!(ConvertCoinSide::ToCoin.to_string(), "1");
+
+        let history: ConvertHistoryQueryResponse = serde_json::from_value(serde_json::json!({
+            "list": [{"accountType": "funding"}]
+        }))
+        .expect("convert history account labels should deserialize");
+
+        assert_eq!(
+            history.list.unwrap()[0].account_type.as_deref(),
+            Some("funding")
+        );
+    }
+
+    #[test]
+    fn option_base_coins_deserializes_the_unwrapped_result() {
+        let raw = r#"{
+            "retCode": 0,
+            "retMsg": "success",
+            "result": {
+                "list": [{
+                    "baseCoin": "BTC",
+                    "quoteCoin": "USDT",
+                    "settleCoin": "USDT",
+                    "optionShowName": "BTC-Options",
+                    "optionOnlineTime": 1736323200000,
+                    "hasSymbol": 1,
+                    "underlyingType": 0
+                }]
+            },
+            "retExtInfo": {},
+            "time": 1736323200000
+        }"#;
+
+        let response: ApiResponse<GetOptionBaseCoinsResponse> =
+            serde_json::from_str(raw).expect("response should deserialize");
+
+        let result = serde_json::to_value(response.result).expect("result should serialize");
+        assert_eq!(
+            result.pointer("/list/0/baseCoin").and_then(|v| v.as_str()),
+            Some("BTC")
+        );
+    }
+
+    #[test]
+    fn referral_codes_deserialize_the_unwrapped_result() {
+        let raw = r#"{
+            "retCode": 0,
+            "retMsg": "success",
+            "result": {
+                "referralCodes": [{
+                    "referralCode": "code",
+                    "referralLink": "https://example.test/code",
+                    "scene": 1
+                }]
+            },
+            "retExtInfo": {},
+            "time": 1736323200000
+        }"#;
+
+        let response: ApiResponse<QueryReferralCodeResponse> =
+            serde_json::from_str(raw).expect("response should deserialize");
+
+        let result = serde_json::to_value(response.result).expect("result should serialize");
+        assert_eq!(
+            result
+                .pointer("/referralCodes/0/referralCode")
+                .and_then(|v| v.as_str()),
+            Some("code")
+        );
+    }
+
+    #[test]
+    fn generated_service_modules_are_exported_and_spread_levels_deserialize() {
+        let _: InsLoanProductInfosResponse = serde_json::json!({"list": []});
+        let _: GetPreUpgradeOrderHistoryResponse = serde_json::json!({"list": []});
+
+        let result: GetSpreadOrderbookResponse = serde_json::from_value(serde_json::json!({
+            "s": "SOLUSDT_SOL/USDT",
+            "b": [["21.0000", "0.1"]],
+            "a": [["23.0107", "4.6"]],
+            "ts": 1744077242177_i64,
+            "u": 46977,
+            "seq": 213110,
+            "cts": 1744076329043_i64
+        }))
+        .expect("spread orderbook result should deserialize");
+
+        assert_eq!(result.b.as_ref().map(Vec::len), Some(1));
+        assert_eq!(result.b.as_ref().unwrap()[0][0], "21.0000");
+    }
+
+    #[test]
+    fn spread_order_requests_serialize_required_parameters() {
+        let create = CreateSpreadOrderParams {
+            symbol: "SOLUSDT_SOL/USDT".into(),
+            side: Side::Buy,
+            order_type: OrderType::Limit,
+            qty: "0.1".into(),
+            price: Some("21.0".into()),
+            order_link_id: Some("spread-1".into()),
+            time_in_force: Some(TimeInForce::GTC),
+        };
+        assert_eq!(
+            serde_json::to_value(create).unwrap(),
+            serde_json::json!({
+                "symbol": "SOLUSDT_SOL/USDT",
+                "side": "Buy",
+                "orderType": "Limit",
+                "qty": "0.1",
+                "price": "21.0",
+                "orderLinkId": "spread-1",
+                "timeInForce": "GTC"
+            })
+        );
+
+        let amend = AmendSpreadOrderParams {
+            symbol: "SOLUSDT_SOL/USDT".into(),
+            order_id: Some("order-1".into()),
+            order_link_id: None,
+            qty: None,
+            price: Some("22.0".into()),
+        };
+        assert_eq!(
+            serde_json::to_value(amend).unwrap(),
+            serde_json::json!({
+                "symbol": "SOLUSDT_SOL/USDT",
+                "orderId": "order-1",
+                "price": "22.0"
+            })
+        );
+
+        let cancel = CancelSpreadOrderParams {
+            order_id: Some("order-1".into()),
+            order_link_id: None,
+        };
+        assert_eq!(
+            serde_json::to_value(cancel).unwrap(),
+            serde_json::json!({"orderId": "order-1"})
+        );
+
+        let cancel_all = CancelAllSpreadOrdersParams {
+            symbol: None,
+            cancel_all: Some(true),
+        };
+        assert_eq!(
+            serde_json::to_value(cancel_all).unwrap(),
+            serde_json::json!({"cancelAll": true})
+        );
+    }
+}
+
 /// API response wrapper from Bybit.
 #[derive(Debug, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -351,19 +692,26 @@ impl BybitClient {
             return Err(BybitError::Parse(format!(
                 "HTTP {} - {}",
                 status.as_u16(),
-                text
+                mask_sensitive(&text)
             )));
         }
 
-        // Parse successful response
-        let api_resp: ApiResponse<T> = serde_json::from_str(&text).map_err(|e| {
-            warn!("Failed to parse response: {}, body: {}", e, text);
-            BybitError::Parse(format!(
-                "JSON parse error: {} - body: {}",
-                e,
-                &text[..text.len().min(200)]
-            ))
-        })?;
+        // Parse the common envelope before the endpoint-specific result. Bybit
+        // returns API errors with HTTP 200, and their empty `result` object may
+        // not satisfy a successful response type.
+        let masked_text = mask_sensitive(&text);
+        let api_resp: ApiResponse<serde_json::Value> =
+            serde_json::from_str(&text).map_err(|e| {
+                warn!(
+                    "Failed to parse response envelope: {}, body: {}",
+                    e, masked_text
+                );
+                BybitError::Parse(format!(
+                    "JSON parse error: {} - body: {}",
+                    e,
+                    masked_text.chars().take(200).collect::<String>()
+                ))
+            })?;
 
         // Check for API-level errors
         if api_resp.ret_code != 0 {
@@ -373,6 +721,16 @@ impl BybitClient {
             });
         }
 
-        Ok(api_resp.result)
+        serde_json::from_value(api_resp.result).map_err(|e| {
+            warn!(
+                "Failed to parse response result: {}, body: {}",
+                e, masked_text
+            );
+            BybitError::Parse(format!(
+                "JSON parse error: {} - body: {}",
+                e,
+                masked_text.chars().take(200).collect::<String>()
+            ))
+        })
     }
 }

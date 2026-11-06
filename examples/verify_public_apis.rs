@@ -27,9 +27,11 @@ async fn main() -> Result<()> {
         }};
     }
 
-    check!("get_server_time", client.get_server_time(), |t: &bybit_api::ServerTime| {
-        format!("time_second={}", t.time_second)
-    });
+    check!(
+        "get_server_time",
+        client.get_server_time(),
+        |t: &bybit_api::ServerTime| { format!("time_second={}", t.time_second) }
+    );
 
     check!(
         "get_tickers(Linear, BTCUSDT)",

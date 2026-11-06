@@ -984,3 +984,40 @@ pub struct UpgradeToUtaProMsg {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub msg: Option<Vec<String>>,
 }
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DemoApplyMoneyParams {
+    #[serde(default)]
+    pub adjust_type: Option<i64>,
+    #[serde(default)]
+    pub uta_demo_apply_money: Option<Vec<UtaDemoApplyMoneyConfig>>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct UtaDemoApplyMoneyConfig {
+    #[serde(default)]
+    pub coin: Option<String>,
+    #[serde(default)]
+    pub amount_str: Option<String>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DemoApplyMoneyResponse {
+    #[serde(default)]
+    pub result_code: Option<String>,
+    #[serde(default)]
+    pub uta_demo_apply_money_config: Option<Vec<UtaDemoApplyMoneyConfig>>,
+    #[serde(default)]
+    pub order_status: Option<String>,
+    #[serde(default)]
+    pub ret_msg: Option<String>,
+}
+
+pub type GetOptionAssetInfoResponse = serde_json::Value;
+
+pub type GetPayInfoResponse = serde_json::Value;
+
+pub type GetTradeInfoForAnalysisResponse = serde_json::Value;

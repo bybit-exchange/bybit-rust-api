@@ -3150,3 +3150,17 @@ pub struct PwmClaimRequest {
     pub to_account_type: Option<String>,
     pub order_link_id: String,
 }
+
+pub type ListEarnAutoSavingsResponse = serde_json::Value;
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct EditEarnAutoSavingsParams {
+    #[serde(default)]
+    pub coin: Option<String>,
+    pub is_selected: bool,
+    #[serde(default)]
+    pub purchase_immediately: Option<bool>,
+}
+
+pub type EditEarnAutoSavingsResponse = serde_json::Value;

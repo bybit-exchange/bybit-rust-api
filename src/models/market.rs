@@ -1101,3 +1101,31 @@ pub struct ServerTimeResult {
 }
 
 pub type ServerTimeResponse = ServerTimeResult;
+
+pub type GetOptionBaseCoinsResponse = OptionBaseCoinsResult;
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct OptionBaseCoinsResult {
+    #[serde(default)]
+    pub list: Option<Vec<OptionBaseCoin>>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct OptionBaseCoin {
+    #[serde(default)]
+    pub base_coin: Option<String>,
+    #[serde(default)]
+    pub quote_coin: Option<String>,
+    #[serde(default)]
+    pub settle_coin: Option<String>,
+    #[serde(default)]
+    pub option_show_name: Option<String>,
+    #[serde(default)]
+    pub option_online_time: Option<i64>,
+    #[serde(default)]
+    pub has_symbol: Option<i64>,
+    #[serde(default)]
+    pub underlying_type: Option<i64>,
+}

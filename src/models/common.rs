@@ -47,6 +47,46 @@ impl From<&str> for RedactedString {
     }
 }
 
+/// Forward-compatible scalar value for generated OpenAPI enums whose
+/// authoritative variants are not available to the generator.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum OpenApiScalar {
+    String(String),
+    Signed(i64),
+    Unsigned(u64),
+    Boolean(bool),
+}
+
+impl From<String> for OpenApiScalar {
+    fn from(value: String) -> Self {
+        Self::String(value)
+    }
+}
+
+impl From<&str> for OpenApiScalar {
+    fn from(value: &str) -> Self {
+        Self::String(value.to_owned())
+    }
+}
+
+impl From<i64> for OpenApiScalar {
+    fn from(value: i64) -> Self {
+        Self::Signed(value)
+    }
+}
+
+impl From<u64> for OpenApiScalar {
+    fn from(value: u64) -> Self {
+        Self::Unsigned(value)
+    }
+}
+
+impl From<bool> for OpenApiScalar {
+    fn from(value: bool) -> Self {
+        Self::Boolean(value)
+    }
+}
 
 /// Product category.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]

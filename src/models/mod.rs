@@ -1,5 +1,4 @@
 //! Data models for Bybit API requests and responses.
-
 pub mod account;
 pub mod asset;
 pub mod broker;
@@ -8,13 +7,15 @@ pub mod crypto_loan;
 pub mod earn;
 pub mod fiat;
 pub mod fmart_bot;
+pub mod ins_loan;
 pub mod market;
 pub mod position;
+pub mod pre_upgrade;
 pub mod rfq;
 pub mod spot_margin;
+pub mod spread_trade;
 pub mod trade;
 pub mod user;
-
 pub use account::*;
 pub use asset::*;
 pub use broker::*;
@@ -23,9 +24,22 @@ pub use crypto_loan::*;
 pub use earn::*;
 pub use fiat::*;
 pub use fmart_bot::*;
+pub use ins_loan::*;
 pub use market::*;
 pub use position::*;
+pub use pre_upgrade::*;
 pub use rfq::*;
 pub use spot_margin::*;
+pub use spread_trade::*;
 pub use trade::*;
 pub use user::*;
+pub mod alpha;
+pub mod combo_bot;
+pub mod dca;
+pub mod event;
+pub mod fgrid_bot;
+pub mod grid;
+pub mod referral;
+pub mod spot_x;
+pub mod strategy;
+pub mod tax;

@@ -2,7 +2,6 @@
 
 use crate::client::BybitClient;
 use crate::error::Result;
-use crate::models::position::*;
 use crate::models::Category;
 use crate::models::*;
 
@@ -286,5 +285,20 @@ impl BybitClient {
         params: SetAutoAddMarginParams,
     ) -> Result<SetAutoAddMarginResponse> {
         self.post("/v5/position/set-auto-add-margin", &params).await
+    }
+}
+
+impl BybitClient {
+    pub async fn get_position_symbol_info(
+        &self,
+        category: Category,
+        symbol: Option<&str>,
+    ) -> Result<GetPositionSymbolInfoResponse> {
+        let category_string = category.to_string();
+        let mut params = vec![("category", category_string.as_str())];
+        if let Some(value) = symbol {
+            params.push(("symbol", value));
+        }
+        self.get("/v5/position/symbol-info", &params).await
     }
 }

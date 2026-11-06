@@ -1,15 +1,27 @@
 //! API endpoint implementations.
-
 pub mod account;
+pub mod alpha;
 pub mod asset;
 pub mod broker;
+pub mod combo_bot;
 pub mod crypto_loan;
+pub mod dca;
 pub mod earn;
+pub mod event;
+pub mod fgrid_bot;
 pub mod fiat;
 pub mod fmart_bot;
+pub mod grid;
+pub mod ins_loan;
 pub mod market;
 pub mod position;
+pub mod pre_upgrade;
+pub mod referral;
 pub mod rfq;
 pub mod spot_margin;
+pub mod spot_x;
+pub mod spread_trade;
+pub mod strategy;
+pub mod tax;
 pub mod trade;
 pub mod user;

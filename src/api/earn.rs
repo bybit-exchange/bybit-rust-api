@@ -19,7 +19,10 @@ impl BybitClient {
     // FIXME(typed-signature): falls back to `serde_json::Value` because the
     // OpenAPI spec referenced a response/request type that gen-sdk-rust could
     // not auto-resolve. Replace with a typed struct in a follow-up PR.
-    pub async fn add_liquidity_mining_margin(&self, params: serde_json::Value) -> Result<serde_json::Value> {
+    pub async fn add_liquidity_mining_margin(
+        &self,
+        params: serde_json::Value,
+    ) -> Result<serde_json::Value> {
         self.post("/v5/earn/liquidity-mining/add-margin", &params)
             .await
     }
@@ -679,7 +682,10 @@ impl BybitClient {
         position_ids: &str,
     ) -> Result<GetSmartLeverageRedeemEstAmountListResponse> {
         let cat_str = category.to_string();
-        let params = vec![("category", cat_str.as_str()), ("positionIds", position_ids)];
+        let params = vec![
+            ("category", cat_str.as_str()),
+            ("positionIds", position_ids),
+        ];
 
         self.get("/v5/earn/advance/get-redeem-est-amount-list", &params)
             .await
@@ -1245,5 +1251,46 @@ impl BybitClient {
     ) -> Result<serde_json::Value> {
         self.post("/v5/earn/fixed-term/position/auto-invest", &params)
             .await
+    }
+}
+
+fn auto_savings_params<'a>(coins: Option<&'a [&'a str]>) -> Vec<(&'static str, &'a str)> {
+    coins
+        .unwrap_or_default()
+        .iter()
+        .map(|coin| ("coins", *coin))
+        .collect()
+}
+
+impl BybitClient {
+    pub async fn list_earn_auto_savings(
+        &self,
+        coins: Option<&[&str]>,
+    ) -> Result<ListEarnAutoSavingsResponse> {
+        let params = auto_savings_params(coins);
+        self.get("/v5/earn/flexible-saving/auto-savings", &params)
+            .await
+    }
+
+    pub async fn edit_earn_auto_savings(
+        &self,
+        params: EditEarnAutoSavingsParams,
+    ) -> Result<EditEarnAutoSavingsResponse> {
+        self.post("/v5/earn/flexible-saving/auto-savings", &params)
+            .await
+    }
+}
+
+#[cfg(test)]
+mod auto_savings_tests {
+    use super::auto_savings_params;
+
+    #[test]
+    fn auto_savings_uses_repeated_coin_parameters() {
+        assert_eq!(
+            auto_savings_params(Some(&["BTC", "ETH"])),
+            vec![("coins", "BTC"), ("coins", "ETH")]
+        );
+        assert!(auto_savings_params(None).is_empty());
     }
 }
