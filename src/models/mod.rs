@@ -41,6 +41,5 @@ pub mod fgrid_bot;
 pub mod grid;
 pub mod referral;
 pub mod spot_x;
-pub mod stocks;
 pub mod strategy;
 pub mod tax;

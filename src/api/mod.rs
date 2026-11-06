@@ -21,7 +21,6 @@ pub mod rfq;
 pub mod spot_margin;
 pub mod spot_x;
 pub mod spread_trade;
-pub mod stocks;
 pub mod strategy;
 pub mod tax;
 pub mod trade;

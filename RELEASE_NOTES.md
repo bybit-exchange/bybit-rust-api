@@ -1,6 +1,6 @@
 ## 2026-10-28
 
-### New Functions (87)
+### New Functions (78)
 - get_crypto_loan_fixed_available_inventory
 - get_crypto_loan_flexible_available_inventory
 - close_combo_bot
@@ -66,15 +66,6 @@
 - get_puzzle_project_list
 - get_token_splash_project_list
 - get_token_splash_user_activity_params
-- place_stocks_order
-- cancel_stocks_order
-- get_stocks_order_detail
-- get_convert_list
-- submit_convert
-- get_convert_detail
-- get_stocks_positions
-- get_market_session
-- get_multiplier_list
 - get_ec_order_history
 - get_ec_active_orders
 - get_ec_position_info
@@ -89,7 +80,7 @@
 - batch_create_tax_reports
 - batch_query_tax_reports
 
-### New Types (248)
+### New Types (228)
 - CloseComboBotParams
 - BotStopType
 - CloseComboBotResponse
@@ -286,26 +277,6 @@
 - GetUserActivityParamsResult
 - UserActivityItemDTO
 - TradeTaskDetailDTO
-- PlaceStocksOrderParams
-- PlaceStocksOrderResponse
-- CancelStocksOrderParams
-- CancelStocksOrderResponse
-- GetStocksOrderDetailResponse
-- OrderDetailDto
-- OrderDetailStatus
-- GetConvertListResponse
-- SubmitConvertParams
-- SubmitConvertResponse
-- GetConvertDetailResponse
-- ConvertDetailDto
-- ConvertStatus
-- GetStocksPositionsResponse
-- GetMarketSessionResponse
-- MarketSessionDto
-- TradingHolidayDto
-- GetMultiplierListResponse
-- MultiplierListResult
-- MultiplierItemDto
 - GetEcOrderHistoryResponse
 - GetEcActiveOrdersResponse
 - GetEcPositionInfoResponse
