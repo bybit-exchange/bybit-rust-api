@@ -61,9 +61,7 @@ pub struct CloseFmartBotParams {
     pub stop_type: Option<FMartBotStopType>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct FMartBotStopType {}
+pub type FMartBotStopType = crate::models::OpenApiScalar;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -192,21 +190,13 @@ pub struct FMartBotDetail {
     pub adl_rank_indicator: Option<i64>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct FMartBotDisplayStatus {}
+pub type FMartBotDisplayStatus = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct FMartMode {}
+pub type FMartMode = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct AutoCycleToggle {}
+pub type AutoCycleToggle = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct FmartBotBotCloseCode {}
+pub type FmartBotBotCloseCode = crate::models::OpenApiScalar;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -261,9 +251,7 @@ pub struct GetFmartLimitResponse {
     pub leverage: Option<FmartBotRange>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct FMartLimitCheckCode {}
+pub type FMartLimitCheckCode = crate::models::OpenApiScalar;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]

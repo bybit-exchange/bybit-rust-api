@@ -11,6 +11,7 @@ impl BybitClient {
         self.post("/v5/strategy/create", &params).await
     }
 
+    #[allow(clippy::too_many_arguments)]
     pub async fn query_strategy_order_list(
         &self,
         strategy_id: &str,
@@ -53,6 +54,7 @@ impl BybitClient {
         self.get("/v5/strategy/order-list", &params).await
     }
 
+    #[allow(clippy::too_many_arguments)]
     pub async fn query_strategy_list(
         &self,
         strategy_id: Option<&str>,

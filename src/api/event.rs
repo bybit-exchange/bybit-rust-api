@@ -3,6 +3,7 @@ use crate::error::Result;
 use crate::models::event::*;
 
 impl BybitClient {
+    #[allow(clippy::too_many_arguments)]
     pub async fn get_ec_order_history(
         &self,
         symbol: Option<&str>,
@@ -136,6 +137,7 @@ impl BybitClient {
         self.get("/v5/event/settlements", &params).await
     }
 
+    #[allow(clippy::too_many_arguments)]
     pub async fn get_ec_trade_history(
         &self,
         symbol: &str,

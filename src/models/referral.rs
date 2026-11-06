@@ -4,16 +4,7 @@ use serde::{Deserialize, Serialize};
 #[serde(rename_all = "camelCase")]
 pub struct GetReferralCampaignRewardsParams {}
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetReferralCampaignRewardsResponse {
-    #[serde(default)]
-    pub ret_code: Option<i64>,
-    #[serde(default)]
-    pub ret_msg: Option<String>,
-    #[serde(default)]
-    pub result: Option<CampaignResult>,
-}
+pub type GetReferralCampaignRewardsResponse = Option<CampaignResult>;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -71,20 +62,9 @@ pub struct GetReferralCommissionRecordsParams {
     pub product_line: Option<BusinessUnit>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct BusinessUnit {}
+pub type BusinessUnit = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetReferralCommissionRecordsResponse {
-    #[serde(default)]
-    pub ret_code: Option<i64>,
-    #[serde(default)]
-    pub ret_msg: Option<String>,
-    #[serde(default)]
-    pub result: Option<GetReferralCommissionRecordsResult>,
-}
+pub type GetReferralCommissionRecordsResponse = Option<GetReferralCommissionRecordsResult>;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -118,25 +98,13 @@ pub struct ReferralCommissionRecord {
     pub is_boost_m2: Option<bool>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct CommissionStatus {}
+pub type CommissionStatus = crate::models::OpenApiScalar;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GetReferralUserIdentityProfileParams {}
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetReferralUserIdentityProfileResponse {
-    pub ret_code: i64,
-    pub ret_msg: String,
-    pub result: GetReferralUserIdentityProfileResult,
-    #[serde(default)]
-    pub ret_ext_info: Option<serde_json::Value>,
-    #[serde(default)]
-    pub time: Option<i64>,
-}
+pub type GetReferralUserIdentityProfileResponse = GetReferralUserIdentityProfileResult;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -203,20 +171,9 @@ pub struct GetReferralUserInvitationsParams {
     pub friend_status: Option<FriendStatus>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct FriendStatus {}
+pub type FriendStatus = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetReferralUserInvitationsResponse {
-    #[serde(default)]
-    pub ret_code: Option<i64>,
-    #[serde(default)]
-    pub ret_msg: Option<String>,
-    #[serde(default)]
-    pub result: Option<GetReferralUserInvitationsResult>,
-}
+pub type GetReferralUserInvitationsResponse = Option<GetReferralUserInvitationsResult>;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]

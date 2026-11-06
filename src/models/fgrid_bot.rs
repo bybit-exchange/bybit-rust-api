@@ -171,37 +171,21 @@ pub struct FutureGridDetail {
     pub adl_rank_indicator: Option<i64>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct FutureGridStatus {}
+pub type FutureGridStatus = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct FutureGridType {}
+pub type FutureGridType = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct FutureGridMode {}
+pub type FutureGridMode = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct FGridBotStopType {}
+pub type FGridBotStopType = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct FgridBotBotCloseCode {}
+pub type FgridBotBotCloseCode = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct FuturesPositionSide {}
+pub type FuturesPositionSide = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct TpSlType {}
+pub type TpSlType = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct BotAccountType {}
+pub type BotAccountType = crate::models::OpenApiScalar;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -267,17 +251,11 @@ pub struct CreateFgridBotParams {
     pub channel: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct FutureGridModeFgridBotSingleCreate {}
+pub type FutureGridModeFgridBotSingleCreate = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct FutureGridTypeFgridBotSingleCreate {}
+pub type FutureGridTypeFgridBotSingleCreate = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct FGridSource {}
+pub type FGridSource = crate::models::OpenApiScalar;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -286,17 +264,11 @@ pub struct ToolsDiscoveryParameter {
     pub strategy_id: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct TpSlTypeFgridBotSingleCreate {}
+pub type TpSlTypeFgridBotSingleCreate = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct FgridBotBlockSource {}
+pub type FgridBotBlockSource = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct FgridBotCreateType {}
+pub type FgridBotCreateType = crate::models::OpenApiScalar;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -313,9 +285,7 @@ pub struct CreateFgridBotResponse {
     pub ban_reason_text: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct FgridCheckCode {}
+pub type FgridCheckCode = crate::models::OpenApiScalar;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -349,17 +319,11 @@ pub struct ValidateFgridInputParams {
     pub move_down_price: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct FutureGridTypeFgridBotValidateInput {}
+pub type FutureGridTypeFgridBotValidateInput = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct FutureGridModeFgridBotValidateInput {}
+pub type FutureGridModeFgridBotValidateInput = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct TpSlTypeFgridBotValidateInput {}
+pub type TpSlTypeFgridBotValidateInput = crate::models::OpenApiScalar;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]

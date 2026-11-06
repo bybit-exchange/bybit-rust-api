@@ -8,9 +8,7 @@ pub struct CloseGridBotParams {
     pub close_mode: GridCloseMode,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GridCloseMode {}
+pub type GridCloseMode = crate::models::OpenApiScalar;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -61,21 +59,13 @@ pub struct CreateGridBotParams {
     pub channel: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GridBotSource {}
+pub type GridBotSource = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct InvestMode {}
+pub type InvestMode = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GridBlockSource {}
+pub type GridBlockSource = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GridCreateType {}
+pub type GridCreateType = crate::models::OpenApiScalar;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -192,17 +182,11 @@ pub struct GridDetail {
     pub ori_cell_number: Option<i64>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GridStatus {}
+pub type GridStatus = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GridCloseReason {}
+pub type GridCloseReason = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GridBotCloseCode {}
+pub type GridBotCloseCode = crate::models::OpenApiScalar;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -274,6 +258,4 @@ pub struct GridRange {
     pub to: String,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct ValidateInputCheckCode {}
+pub type ValidateInputCheckCode = crate::models::OpenApiScalar;

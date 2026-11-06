@@ -132,6 +132,14 @@ mod query_tests {
 #[cfg(test)]
 mod response_shape_tests {
     use super::{ApiResponse, BybitClient};
+    use crate::models::alpha::GetAssetListResponse;
+    use crate::models::alpha::{GetLppositionListParams, PredictionOrderType};
+    use crate::models::dca::DCACloseMode;
+    use crate::models::event::GetEcPositionInfoResponse;
+    use crate::models::fmart_bot::AutoCycleToggle;
+    use crate::models::spot_margin::QueryFixedBorrowPenaltyInterestResponse;
+    use crate::models::spot_x::GetLaunchpoolProjectListResponse;
+    use crate::models::strategy::QueryStrategyListResponse;
     use crate::models::{
         AmendSpreadOrderParams, CancelAllSpreadOrdersParams, CancelSpreadOrderParams,
         ConvertAccountType, ConvertCoinSide, ConvertHistoryQueryResponse, CreateSpreadOrderParams,
@@ -139,6 +147,136 @@ mod response_shape_tests {
         GetSpreadOrderbookResponse, InsLoanProductInfosResponse, OrderType,
         QueryReferralCodeResponse, Side, TimeInForce,
     };
+    use crate::{BybitError, ClientConfig};
+    use std::io::{Read, Write};
+    use std::net::TcpListener;
+
+    fn serve_json_once(body: &str) -> (String, std::thread::JoinHandle<()>) {
+        let listener = TcpListener::bind("127.0.0.1:0").expect("bind local test server");
+        let address = listener.local_addr().expect("read local test address");
+        let body = body.to_owned();
+        let handle = std::thread::spawn(move || {
+            let (mut stream, _) = listener.accept().expect("accept one request");
+            let mut request = [0_u8; 2048];
+            let _ = stream.read(&mut request).expect("read request");
+            let response = format!(
+                "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{}",
+                body.len(),
+                body
+            );
+            stream
+                .write_all(response.as_bytes())
+                .expect("write response");
+        });
+        (format!("http://{address}"), handle)
+    }
+
+    #[derive(Debug, serde::Deserialize)]
+    struct StrictResult {
+        #[allow(dead_code)]
+        required: String,
+    }
+
+    #[tokio::test]
+    async fn api_errors_are_checked_before_result_deserialization() {
+        let body = r#"{"retCode":181023,"retMsg":"Only EC maker accounts are allowed","result":{},"retExtInfo":{},"time":1}"#;
+        let (base_url, server) = serve_json_once(body);
+        let client = BybitClient::new(ClientConfig::builder("", "").base_url(base_url).build())
+            .expect("create client");
+
+        let error = client
+            .get_public::<StrictResult>("/test", &[])
+            .await
+            .expect_err("nonzero retCode must fail");
+        server.join().expect("join local test server");
+
+        assert!(matches!(error, BybitError::Api { code: 181023, .. }));
+    }
+
+    #[tokio::test]
+    async fn parse_errors_redact_sensitive_response_values() {
+        let body = r#"{"retCode":0,"retMsg":"OK","result":{"apiSecret":"top-secret-response"},"retExtInfo":{},"time":1}"#;
+        let (base_url, server) = serve_json_once(body);
+        let client = BybitClient::new(ClientConfig::builder("", "").base_url(base_url).build())
+            .expect("create client");
+
+        let error = client
+            .get_public::<StrictResult>("/test", &[])
+            .await
+            .expect_err("incompatible result must fail");
+        server.join().expect("join local test server");
+        let message = error.to_string();
+
+        assert!(!message.contains("top-secret-response"));
+        assert!(message.contains("***REDACTED***"));
+    }
+
+    #[test]
+    fn generated_responses_deserialize_unwrapped_result_payloads() {
+        let launchpool: GetLaunchpoolProjectListResponse =
+            serde_json::from_value(serde_json::json!({"list": [{"projectId": "project-1"}]}))
+                .expect("launchpool result should deserialize");
+        let launchpool = serde_json::to_value(launchpool).expect("serialize launchpool result");
+        assert_eq!(
+            launchpool
+                .pointer("/list/0/projectId")
+                .and_then(|v| v.as_str()),
+            Some("project-1")
+        );
+
+        let alpha: GetAssetListResponse =
+            serde_json::from_value(serde_json::json!({"items": ["BTC"]}))
+                .expect("alpha result should deserialize");
+        let alpha = serde_json::to_value(alpha).expect("serialize alpha result");
+        assert_eq!(
+            alpha.pointer("/items/0").and_then(|v| v.as_str()),
+            Some("BTC")
+        );
+
+        let event: GetEcPositionInfoResponse =
+            serde_json::from_value(serde_json::json!({"list": []}))
+                .expect("event result should deserialize");
+        let event = serde_json::to_value(event).expect("serialize event result");
+        assert!(event.pointer("/list").is_some());
+
+        let strategy: QueryStrategyListResponse =
+            serde_json::from_value(serde_json::json!({"list": []}))
+                .expect("strategy result should deserialize");
+        let strategy = serde_json::to_value(strategy).expect("serialize strategy result");
+        assert!(strategy.pointer("/list").is_some());
+
+        let interest: QueryFixedBorrowPenaltyInterestResponse =
+            serde_json::from_value(serde_json::json!({"list": []}))
+                .expect("spot margin result should deserialize");
+        let interest = serde_json::to_value(interest).expect("serialize spot margin result");
+        assert!(interest.pointer("/list").is_some());
+    }
+
+    #[test]
+    fn generated_open_enums_round_trip_scalar_wire_values() {
+        let number: DCACloseMode =
+            serde_json::from_value(serde_json::json!(1)).expect("numeric enum value");
+        assert_eq!(serde_json::to_value(number).unwrap(), serde_json::json!(1));
+
+        let string: PredictionOrderType =
+            serde_json::from_value(serde_json::json!("Limit")).expect("string enum value");
+        assert_eq!(
+            serde_json::to_value(string).unwrap(),
+            serde_json::json!("Limit")
+        );
+
+        let boolean: AutoCycleToggle =
+            serde_json::from_value(serde_json::json!(true)).expect("boolean enum value");
+        assert_eq!(
+            serde_json::to_value(boolean).unwrap(),
+            serde_json::json!(true)
+        );
+
+        assert_eq!(
+            serde_json::to_value(GetLppositionListParams {}).unwrap(),
+            serde_json::json!({})
+        );
+    }
 
     #[test]
     fn trade_analysis_requires_symbol() {
@@ -554,19 +692,26 @@ impl BybitClient {
             return Err(BybitError::Parse(format!(
                 "HTTP {} - {}",
                 status.as_u16(),
-                text
+                mask_sensitive(&text)
             )));
         }
 
-        // Parse successful response
-        let api_resp: ApiResponse<T> = serde_json::from_str(&text).map_err(|e| {
-            warn!("Failed to parse response: {}, body: {}", e, text);
-            BybitError::Parse(format!(
-                "JSON parse error: {} - body: {}",
-                e,
-                &text[..text.len().min(200)]
-            ))
-        })?;
+        // Parse the common envelope before the endpoint-specific result. Bybit
+        // returns API errors with HTTP 200, and their empty `result` object may
+        // not satisfy a successful response type.
+        let masked_text = mask_sensitive(&text);
+        let api_resp: ApiResponse<serde_json::Value> =
+            serde_json::from_str(&text).map_err(|e| {
+                warn!(
+                    "Failed to parse response envelope: {}, body: {}",
+                    e, masked_text
+                );
+                BybitError::Parse(format!(
+                    "JSON parse error: {} - body: {}",
+                    e,
+                    masked_text.chars().take(200).collect::<String>()
+                ))
+            })?;
 
         // Check for API-level errors
         if api_resp.ret_code != 0 {
@@ -576,6 +721,16 @@ impl BybitClient {
             });
         }
 
-        Ok(api_resp.result)
+        serde_json::from_value(api_resp.result).map_err(|e| {
+            warn!(
+                "Failed to parse response result: {}, body: {}",
+                e, masked_text
+            );
+            BybitError::Parse(format!(
+                "JSON parse error: {} - body: {}",
+                e,
+                masked_text.chars().take(200).collect::<String>()
+            ))
+        })
     }
 }

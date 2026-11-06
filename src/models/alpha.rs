@@ -20,20 +20,7 @@ pub struct GetLporderListParams {
     pub pool_address: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetLporderListResponse {
-    #[serde(default)]
-    pub ret_code: Option<i64>,
-    #[serde(default)]
-    pub ret_msg: Option<String>,
-    #[serde(default)]
-    pub result: Option<serde_json::Value>,
-    #[serde(default)]
-    pub ret_ext_info: Option<serde_json::Value>,
-    #[serde(default)]
-    pub time: Option<i64>,
-}
+pub type GetLporderListResponse = Option<serde_json::Value>;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -44,20 +31,7 @@ pub struct GetLppayTokenListParams {
     pub token_address: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetLppayTokenListResponse {
-    #[serde(default)]
-    pub ret_code: Option<i64>,
-    #[serde(default)]
-    pub ret_msg: Option<String>,
-    #[serde(default)]
-    pub result: Option<serde_json::Value>,
-    #[serde(default)]
-    pub ret_ext_info: Option<serde_json::Value>,
-    #[serde(default)]
-    pub time: Option<i64>,
-}
+pub type GetLppayTokenListResponse = Option<serde_json::Value>;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -67,20 +41,7 @@ pub struct GetLppayTokenPriceParams {
     pub chain_code: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetLppayTokenPriceResponse {
-    #[serde(default)]
-    pub ret_code: Option<i64>,
-    #[serde(default)]
-    pub ret_msg: Option<String>,
-    #[serde(default)]
-    pub result: Option<serde_json::Value>,
-    #[serde(default)]
-    pub ret_ext_info: Option<serde_json::Value>,
-    #[serde(default)]
-    pub time: Option<i64>,
-}
+pub type GetLppayTokenPriceResponse = Option<serde_json::Value>;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -88,20 +49,7 @@ pub struct GetLppoolInfoParams {
     pub pool_address: String,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetLppoolInfoResponse {
-    #[serde(default)]
-    pub ret_code: Option<i64>,
-    #[serde(default)]
-    pub ret_msg: Option<String>,
-    #[serde(default)]
-    pub result: Option<serde_json::Value>,
-    #[serde(default)]
-    pub ret_ext_info: Option<serde_json::Value>,
-    #[serde(default)]
-    pub time: Option<i64>,
-}
+pub type GetLppoolInfoResponse = Option<serde_json::Value>;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -110,39 +58,13 @@ pub struct GetLppoolListParams {
     pub token_symbol: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetLppoolListResponse {
-    #[serde(default)]
-    pub ret_code: Option<i64>,
-    #[serde(default)]
-    pub ret_msg: Option<String>,
-    #[serde(default)]
-    pub result: Option<serde_json::Value>,
-    #[serde(default)]
-    pub ret_ext_info: Option<serde_json::Value>,
-    #[serde(default)]
-    pub time: Option<i64>,
-}
+pub type GetLppoolListResponse = Option<serde_json::Value>;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GetLppositionListParams {}
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetLppositionListResponse {
-    #[serde(default)]
-    pub ret_code: Option<i64>,
-    #[serde(default)]
-    pub ret_msg: Option<String>,
-    #[serde(default)]
-    pub result: Option<serde_json::Value>,
-    #[serde(default)]
-    pub ret_ext_info: Option<serde_json::Value>,
-    #[serde(default)]
-    pub time: Option<i64>,
-}
+pub type GetLppositionListResponse = Option<serde_json::Value>;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -154,20 +76,7 @@ pub struct ExecuteLpredeemParams {
     pub receive_token_code: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct ExecuteLpredeemResponse {
-    #[serde(default)]
-    pub ret_code: Option<i64>,
-    #[serde(default)]
-    pub ret_msg: Option<String>,
-    #[serde(default)]
-    pub result: Option<serde_json::Value>,
-    #[serde(default)]
-    pub ret_ext_info: Option<serde_json::Value>,
-    #[serde(default)]
-    pub time: Option<i64>,
-}
+pub type ExecuteLpredeemResponse = Option<serde_json::Value>;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -186,20 +95,7 @@ pub struct ExecuteLpstakeParams {
     pub price_lower: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct ExecuteLpstakeResponse {
-    #[serde(default)]
-    pub ret_code: Option<i64>,
-    #[serde(default)]
-    pub ret_msg: Option<String>,
-    #[serde(default)]
-    pub result: Option<serde_json::Value>,
-    #[serde(default)]
-    pub ret_ext_info: Option<serde_json::Value>,
-    #[serde(default)]
-    pub time: Option<i64>,
-}
+pub type ExecuteLpstakeResponse = Option<serde_json::Value>;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -212,29 +108,11 @@ pub struct ExecutePredictionBuyParams {
     pub event_id: String,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct PredictionOrderType {}
+pub type PredictionOrderType = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct ExecutePredictionBuyResponse {
-    pub ret_code: i64,
-    pub ret_msg: String,
-    pub result: serde_json::Value,
-    pub ret_ext_info: serde_json::Value,
-    pub time: i64,
-}
+pub type ExecutePredictionBuyResponse = serde_json::Value;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetPredictionEngineStatusResponse {
-    pub ret_code: i64,
-    pub ret_msg: String,
-    pub result: serde_json::Value,
-    pub ret_ext_info: serde_json::Value,
-    pub time: i64,
-}
+pub type GetPredictionEngineStatusResponse = serde_json::Value;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -247,15 +125,7 @@ pub struct GetPredictionEventDetailParams {
     pub has_more_markets: Option<bool>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetPredictionEventDetailResponse {
-    pub ret_code: i64,
-    pub ret_msg: String,
-    pub result: serde_json::Value,
-    pub ret_ext_info: serde_json::Value,
-    pub time: i64,
-}
+pub type GetPredictionEventDetailResponse = serde_json::Value;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -263,15 +133,7 @@ pub struct GetPredictionOrderBookParams {
     pub token_ids: Vec<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetPredictionOrderBookResponse {
-    pub ret_code: i64,
-    pub ret_msg: String,
-    pub result: Vec<serde_json::Value>,
-    pub ret_ext_info: serde_json::Value,
-    pub time: i64,
-}
+pub type GetPredictionOrderBookResponse = Vec<serde_json::Value>;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -285,19 +147,9 @@ pub struct GetPredictionOrderEstimateParams {
     pub pay_token_code: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct PredictionSide {}
+pub type PredictionSide = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetPredictionOrderEstimateResponse {
-    pub ret_code: i64,
-    pub ret_msg: String,
-    pub result: serde_json::Value,
-    pub ret_ext_info: serde_json::Value,
-    pub time: i64,
-}
+pub type GetPredictionOrderEstimateResponse = serde_json::Value;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -318,29 +170,11 @@ pub struct GetPredictionOrderListParams {
     pub days: Option<i64>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct PredictionOrderStatus {}
+pub type PredictionOrderStatus = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetPredictionOrderListResponse {
-    pub ret_code: i64,
-    pub ret_msg: String,
-    pub result: serde_json::Value,
-    pub ret_ext_info: serde_json::Value,
-    pub time: i64,
-}
+pub type GetPredictionOrderListResponse = serde_json::Value;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetPredictionPayTokenListResponse {
-    pub ret_code: i64,
-    pub ret_msg: String,
-    pub result: Vec<PredictionPayTokenDto>,
-    pub ret_ext_info: serde_json::Value,
-    pub time: i64,
-}
+pub type GetPredictionPayTokenListResponse = Vec<PredictionPayTokenDto>;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -359,15 +193,7 @@ pub struct PredictionPayTokenDto {
     pub support_chains: Option<Vec<String>>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetPredictionPortfolioSummaryResponse {
-    pub ret_code: i64,
-    pub ret_msg: String,
-    pub result: serde_json::Value,
-    pub ret_ext_info: serde_json::Value,
-    pub time: i64,
-}
+pub type GetPredictionPortfolioSummaryResponse = serde_json::Value;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -380,15 +206,7 @@ pub struct GetPredictionPositionHistoryParams {
     pub direction: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetPredictionPositionHistoryResponse {
-    pub ret_code: i64,
-    pub ret_msg: String,
-    pub result: serde_json::Value,
-    pub ret_ext_info: serde_json::Value,
-    pub time: i64,
-}
+pub type GetPredictionPositionHistoryResponse = serde_json::Value;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -401,15 +219,7 @@ pub struct GetPredictionPositionListParams {
     pub direction: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetPredictionPositionListResponse {
-    pub ret_code: i64,
-    pub ret_msg: String,
-    pub result: serde_json::Value,
-    pub ret_ext_info: serde_json::Value,
-    pub time: i64,
-}
+pub type GetPredictionPositionListResponse = serde_json::Value;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -423,19 +233,9 @@ pub struct GetPredictionPriceHistoryParams {
     pub fidelity: Option<i64>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct PredictionPriceInterval {}
+pub type PredictionPriceInterval = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetPredictionPriceHistoryResponse {
-    pub ret_code: i64,
-    pub ret_msg: String,
-    pub result: Vec<serde_json::Value>,
-    pub ret_ext_info: serde_json::Value,
-    pub time: i64,
-}
+pub type GetPredictionPriceHistoryResponse = Vec<serde_json::Value>;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -449,15 +249,7 @@ pub struct ExecutePredictionSellParams {
     pub to_token_code: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct ExecutePredictionSellResponse {
-    pub ret_code: i64,
-    pub ret_msg: String,
-    pub result: serde_json::Value,
-    pub ret_ext_info: serde_json::Value,
-    pub time: i64,
-}
+pub type ExecutePredictionSellResponse = serde_json::Value;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -465,19 +257,9 @@ pub struct GetPredictionSideMarketListParams {
     pub event_type: PredictionEventType,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct PredictionEventType {}
+pub type PredictionEventType = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetPredictionSideMarketListResponse {
-    pub ret_code: i64,
-    pub ret_msg: String,
-    pub result: serde_json::Value,
-    pub ret_ext_info: serde_json::Value,
-    pub time: i64,
-}
+pub type GetPredictionSideMarketListResponse = serde_json::Value;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -486,19 +268,9 @@ pub struct GetPredictionGroupStageDetailParams {
     pub stage_code: PredictionStageCode,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct PredictionStageCode {}
+pub type PredictionStageCode = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetPredictionGroupStageDetailResponse {
-    pub ret_code: i64,
-    pub ret_msg: String,
-    pub result: serde_json::Value,
-    pub ret_ext_info: serde_json::Value,
-    pub time: i64,
-}
+pub type GetPredictionGroupStageDetailResponse = serde_json::Value;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -506,25 +278,9 @@ pub struct GetPredictionMatchListParams {
     pub event_type: PredictionEventType,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetPredictionMatchListResponse {
-    pub ret_code: i64,
-    pub ret_msg: String,
-    pub result: serde_json::Value,
-    pub ret_ext_info: serde_json::Value,
-    pub time: i64,
-}
+pub type GetPredictionMatchListResponse = serde_json::Value;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetPredictionTimelineStagesResponse {
-    pub ret_code: i64,
-    pub ret_msg: String,
-    pub result: serde_json::Value,
-    pub ret_ext_info: serde_json::Value,
-    pub time: i64,
-}
+pub type GetPredictionTimelineStagesResponse = serde_json::Value;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -532,15 +288,7 @@ pub struct GetPredictionTokenPriceParams {
     pub token_ids: Vec<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetPredictionTokenPriceResponse {
-    pub ret_code: i64,
-    pub ret_msg: String,
-    pub result: Vec<serde_json::Value>,
-    pub ret_ext_info: serde_json::Value,
-    pub time: i64,
-}
+pub type GetPredictionTokenPriceResponse = Vec<serde_json::Value>;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -549,35 +297,9 @@ pub struct GetAssetDetailParams {
     pub token_address: String,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetAssetDetailResponse {
-    #[serde(default)]
-    pub ret_code: Option<i64>,
-    #[serde(default)]
-    pub ret_msg: Option<String>,
-    #[serde(default)]
-    pub result: Option<serde_json::Value>,
-    #[serde(default)]
-    pub ret_ext_info: Option<serde_json::Value>,
-    #[serde(default)]
-    pub time: Option<i64>,
-}
+pub type GetAssetDetailResponse = Option<serde_json::Value>;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetAssetListResponse {
-    #[serde(default)]
-    pub ret_code: Option<i64>,
-    #[serde(default)]
-    pub ret_msg: Option<String>,
-    #[serde(default)]
-    pub result: Option<serde_json::Value>,
-    #[serde(default)]
-    pub ret_ext_info: Option<serde_json::Value>,
-    #[serde(default)]
-    pub time: Option<i64>,
-}
+pub type GetAssetListResponse = Option<serde_json::Value>;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -586,20 +308,7 @@ pub struct GetBizTokenDetailsParams {
     pub token_address: String,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetBizTokenDetailsResponse {
-    #[serde(default)]
-    pub ret_code: Option<i64>,
-    #[serde(default)]
-    pub ret_msg: Option<String>,
-    #[serde(default)]
-    pub result: Option<serde_json::Value>,
-    #[serde(default)]
-    pub ret_ext_info: Option<serde_json::Value>,
-    #[serde(default)]
-    pub time: Option<i64>,
-}
+pub type GetBizTokenDetailsResponse = Option<serde_json::Value>;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -608,20 +317,7 @@ pub struct GetBizTokenListParams {
     pub token_tag: Option<i64>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetBizTokenListResponse {
-    #[serde(default)]
-    pub ret_code: Option<i64>,
-    #[serde(default)]
-    pub ret_msg: Option<String>,
-    #[serde(default)]
-    pub result: Option<Vec<TradeBizTokenDto>>,
-    #[serde(default)]
-    pub ret_ext_info: Option<serde_json::Value>,
-    #[serde(default)]
-    pub time: Option<i64>,
-}
+pub type GetBizTokenListResponse = Option<Vec<TradeBizTokenDto>>;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -671,20 +367,7 @@ pub struct TokenAddressInfo {
     pub token_address: String,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetBizTokenPriceListResponse {
-    #[serde(default)]
-    pub ret_code: Option<i64>,
-    #[serde(default)]
-    pub ret_msg: Option<String>,
-    #[serde(default)]
-    pub result: Option<serde_json::Value>,
-    #[serde(default)]
-    pub ret_ext_info: Option<serde_json::Value>,
-    #[serde(default)]
-    pub time: Option<i64>,
-}
+pub type GetBizTokenPriceListResponse = Option<serde_json::Value>;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -705,20 +388,7 @@ pub struct GetOrderListParams {
     pub direction: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetOrderListResponse {
-    #[serde(default)]
-    pub ret_code: Option<i64>,
-    #[serde(default)]
-    pub ret_msg: Option<String>,
-    #[serde(default)]
-    pub result: Option<serde_json::Value>,
-    #[serde(default)]
-    pub ret_ext_info: Option<serde_json::Value>,
-    #[serde(default)]
-    pub time: Option<i64>,
-}
+pub type GetOrderListResponse = Option<serde_json::Value>;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -727,20 +397,7 @@ pub struct GetPayTokenListParams {
     pub token_address: String,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetPayTokenListResponse {
-    #[serde(default)]
-    pub ret_code: Option<i64>,
-    #[serde(default)]
-    pub ret_msg: Option<String>,
-    #[serde(default)]
-    pub result: Option<Vec<TradePayTokenDto>>,
-    #[serde(default)]
-    pub ret_ext_info: Option<serde_json::Value>,
-    #[serde(default)]
-    pub time: Option<i64>,
-}
+pub type GetPayTokenListResponse = Option<Vec<TradePayTokenDto>>;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -776,20 +433,7 @@ pub struct ExecutePurchaseParams {
     pub tenant: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct ExecutePurchaseResponse {
-    #[serde(default)]
-    pub ret_code: Option<i64>,
-    #[serde(default)]
-    pub ret_msg: Option<String>,
-    #[serde(default)]
-    pub result: Option<serde_json::Value>,
-    #[serde(default)]
-    pub ret_ext_info: Option<serde_json::Value>,
-    #[serde(default)]
-    pub time: Option<i64>,
-}
+pub type ExecutePurchaseResponse = Option<serde_json::Value>;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -802,20 +446,7 @@ pub struct GetTradeQuoteParams {
     pub quote_mode: Option<i64>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct GetTradeQuoteResponse {
-    #[serde(default)]
-    pub ret_code: Option<i64>,
-    #[serde(default)]
-    pub ret_msg: Option<String>,
-    #[serde(default)]
-    pub result: Option<serde_json::Value>,
-    #[serde(default)]
-    pub ret_ext_info: Option<serde_json::Value>,
-    #[serde(default)]
-    pub time: Option<i64>,
-}
+pub type GetTradeQuoteResponse = Option<serde_json::Value>;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -832,17 +463,4 @@ pub struct ExecuteRedeemParams {
     pub tenant: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct ExecuteRedeemResponse {
-    #[serde(default)]
-    pub ret_code: Option<i64>,
-    #[serde(default)]
-    pub ret_msg: Option<String>,
-    #[serde(default)]
-    pub result: Option<serde_json::Value>,
-    #[serde(default)]
-    pub ret_ext_info: Option<serde_json::Value>,
-    #[serde(default)]
-    pub time: Option<i64>,
-}
+pub type ExecuteRedeemResponse = Option<serde_json::Value>;

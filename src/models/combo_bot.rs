@@ -9,9 +9,7 @@ pub struct CloseComboBotParams {
     pub stop_type: Option<BotStopType>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct BotStopType {}
+pub type BotStopType = crate::models::OpenApiScalar;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -53,9 +51,7 @@ pub struct CreateComboBotParams {
     pub channel: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct AdjustPositionMode {}
+pub type AdjustPositionMode = crate::models::OpenApiScalar;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -74,17 +70,11 @@ pub struct SymbolSetting {
     pub symbol_id: Option<i64>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct ComboBotBotSource {}
+pub type ComboBotBotSource = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct ComboBotBlockSource {}
+pub type ComboBotBlockSource = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct ComboBotCreateType {}
+pub type ComboBotCreateType = crate::models::OpenApiScalar;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -211,17 +201,11 @@ pub struct BotDetail {
     pub tp_exit_equity: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct BotMode {}
+pub type BotMode = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct BotDisplayStatus {}
+pub type BotDisplayStatus = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct ComboBotBotCloseCode {}
+pub type ComboBotBotCloseCode = crate::models::OpenApiScalar;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -240,17 +224,11 @@ pub struct SymbolSettingComboBotGetDetail {
     pub symbol_id: Option<i64>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct SideComboBotGetDetail {}
+pub type SideComboBotGetDetail = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct AdjustPositionModeComboBotGetDetail {}
+pub type AdjustPositionModeComboBotGetDetail = crate::models::OpenApiScalar;
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct BotStopTypeComboBotGetDetail {}
+pub type BotStopTypeComboBotGetDetail = crate::models::OpenApiScalar;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -300,9 +278,7 @@ pub struct GetComboLimitResponse {
     pub trailing_stop_percent: Option<ComboBotRange>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct LimitCheckCode {}
+pub type LimitCheckCode = crate::models::OpenApiScalar;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]

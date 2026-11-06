@@ -7,9 +7,7 @@ pub struct CloseDcabotParams {
     pub close_mode: DCACloseMode,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct DCACloseMode {}
+pub type DCACloseMode = crate::models::OpenApiScalar;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
