@@ -2,7 +2,7 @@
 name = "bybit-api"
 version = "0.1.4"
 edition = "2021"
-rust-version = "1.75"
+rust-version = "1.89"
 license = "MIT"
 description = "A Rust SDK for the Bybit V5 API - async, type-safe, zero-panic"
 repository = "https://github.com/bybit-exchange/bybit-rust-api"
@@ -30,7 +30,7 @@ serde_json = "1"
 rust_decimal = { version = "1", features = ["serde-with-str"] }
 
 # Error handling
-thiserror = "1.0.69"
+thiserror = "2"
 
 # Logging
 tracing = "0.1"
@@ -43,7 +43,7 @@ hex = "0.4"
 # Utilities
 chrono = { version = "0.4", features = ["serde"] }
 url = "2"
-uuid = { version = "=1.16.0", features = ["v4"] }
+uuid = { version = "1", features = ["v4"] }
 
 [dev-dependencies]
 tokio-test = "0.4"
