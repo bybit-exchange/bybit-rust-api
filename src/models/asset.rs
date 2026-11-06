@@ -638,7 +638,7 @@ pub struct ExchangeBody {
     #[serde(default)]
     pub exchange_rate: Option<String>,
     #[serde(default)]
-    pub created_time: Option<i64>,
+    pub created_time: Option<String>,
     #[serde(default)]
     pub exchange_tx_id: Option<String>,
 }

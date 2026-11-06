@@ -1,3 +1,11 @@
+## 2026-11-06 — Review corrections
+
+- Use Alpha-specific numeric order types and sides, and prediction price intervals.
+- Require one `tokenId` for prediction price history and decode its object result.
+- Send the required `eventId` and optional filters for prediction side markets; use the optional `groupName` for group-stage detail.
+- Decode Alpha token quantity limits as JSON numbers and exchange-history timestamps as strings.
+- Add nine regression tests covering the documented request and response payloads.
+
 ## 2026-10-28
 
 ### New Functions (78)

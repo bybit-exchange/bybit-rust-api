@@ -1,11 +1,10 @@
-use crate::models::{Interval, OrderType, Side};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GetLporderListParams {
     #[serde(default)]
-    pub order_type: Option<OrderType>,
+    pub order_type: Option<i64>,
     #[serde(default)]
     pub token_code: Option<String>,
     #[serde(default)]
@@ -103,7 +102,7 @@ pub struct ExecutePredictionBuyParams {
     pub token_id: String,
     pub amount: String,
     pub pay_token_code: String,
-    pub order_type: OrderType,
+    pub order_type: PredictionOrderType,
     pub slippage: String,
     pub event_id: String,
 }
@@ -139,10 +138,10 @@ pub type GetPredictionOrderBookResponse = Vec<serde_json::Value>;
 #[serde(rename_all = "camelCase")]
 pub struct GetPredictionOrderEstimateParams {
     pub token_id: String,
-    pub side: Side,
+    pub side: PredictionSide,
     pub event_id: String,
     pub amount: String,
-    pub order_type: OrderType,
+    pub order_type: PredictionOrderType,
     #[serde(default)]
     pub pay_token_code: Option<String>,
 }
@@ -165,7 +164,7 @@ pub struct GetPredictionOrderListParams {
     #[serde(default)]
     pub event_id: Option<String>,
     #[serde(default)]
-    pub side: Option<Side>,
+    pub side: Option<PredictionSide>,
     #[serde(default)]
     pub days: Option<i64>,
 }
@@ -224,25 +223,20 @@ pub type GetPredictionPositionListResponse = serde_json::Value;
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GetPredictionPriceHistoryParams {
-    #[serde(default)]
-    pub token_ids: Option<Vec<String>>,
-    #[serde(default)]
-    pub event_id: Option<String>,
-    pub interval: Interval,
-    #[serde(default)]
-    pub fidelity: Option<i64>,
+    pub token_id: String,
+    pub interval: PredictionPriceInterval,
 }
 
 pub type PredictionPriceInterval = crate::models::OpenApiScalar;
 
-pub type GetPredictionPriceHistoryResponse = Vec<serde_json::Value>;
+pub type GetPredictionPriceHistoryResponse = serde_json::Value;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ExecutePredictionSellParams {
     pub token_id: String,
     pub size: String,
-    pub order_type: OrderType,
+    pub order_type: PredictionOrderType,
     pub slippage: String,
     pub event_id: String,
     #[serde(default)]
@@ -254,7 +248,15 @@ pub type ExecutePredictionSellResponse = serde_json::Value;
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GetPredictionSideMarketListParams {
-    pub event_type: PredictionEventType,
+    pub event_id: String,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub sort_by: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub market_type: Option<i64>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub limit: Option<i64>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub page_index: Option<i64>,
 }
 
 pub type PredictionEventType = crate::models::OpenApiScalar;
@@ -265,7 +267,8 @@ pub type GetPredictionSideMarketListResponse = serde_json::Value;
 #[serde(rename_all = "camelCase")]
 pub struct GetPredictionGroupStageDetailParams {
     pub event_type: PredictionEventType,
-    pub stage_code: PredictionStageCode,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub group_name: Option<String>,
 }
 
 pub type PredictionStageCode = crate::models::OpenApiScalar;
@@ -345,9 +348,9 @@ pub struct TradeBizTokenDto {
     #[serde(default)]
     pub risk_flag: Option<i64>,
     #[serde(default)]
-    pub min_order_quantity: Option<String>,
+    pub min_order_quantity: Option<serde_json::Number>,
     #[serde(default)]
-    pub max_order_quantity: Option<String>,
+    pub max_order_quantity: Option<serde_json::Number>,
     #[serde(default)]
     pub token_tags: Option<Vec<i64>>,
     #[serde(default)]
