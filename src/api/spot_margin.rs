@@ -281,3 +281,40 @@ impl BybitClient {
             .await
     }
 }
+
+impl BybitClient {
+    pub async fn query_fixed_borrow_penalty_interest(
+        &self,
+        order_id: Option<&str>,
+        order_currency: Option<&str>,
+        limit: Option<&str>,
+        cursor: Option<&str>,
+    ) -> Result<QueryFixedBorrowPenaltyInterestResponse> {
+        let mut params = vec![];
+        if let Some(value) = order_id {
+            params.push(("orderId", value));
+        }
+        if let Some(value) = order_currency {
+            params.push(("orderCurrency", value));
+        }
+        if let Some(value) = limit {
+            params.push(("limit", value));
+        }
+        if let Some(value) = cursor {
+            params.push(("cursor", value));
+        }
+        self.get(
+            "/v5/spot-margin-trade/fixedborrow-interest-accrued",
+            &params,
+        )
+        .await
+    }
+
+    pub async fn cancel_fixed_borrow_order_post(
+        &self,
+        params: CancelFixedBorrowOrderPostParams,
+    ) -> Result<CancelFixedBorrowOrderPostResponse> {
+        self.post("/v5/spot-margin-trade/fixedborrow-order-cancel", &params)
+            .await
+    }
+}
